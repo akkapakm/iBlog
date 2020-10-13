@@ -12,12 +12,20 @@
               <a-icon type="question-circle-o" />
             </a-tooltip>
           </span>
-          <a-input v-decorator="['blogName', blogNameOpts]" placeholder="请输入博客名称" allow-clear />
+          <a-input
+            v-decorator="['blogName', blogNameOpts]"
+            placeholder="请输入博客名称"
+            allow-clear
+          />
         </a-form-item>
         <a-form-item :colon="false">
           <span slot="label">
             博客标语
-            <a-tooltip title="显示于博客名称的下方，为空则不显示" placement="topLeft" arrow-point-at-center>
+            <a-tooltip
+              title="显示于博客名称的下方，为空则不显示"
+              placement="topLeft"
+              arrow-point-at-center
+            >
               <a-icon type="question-circle-o" />
             </a-tooltip>
           </span>
@@ -47,7 +55,7 @@
             accept="image/*"
             @change="uploadChange"
           >
-            <img v-if="blogLogo" :src="blogLogo" alt="image">
+            <img v-if="blogLogo" :src="blogLogo" alt="image" />
             <div v-else>
               <a-icon :type="imgLoading ? 'loading' : 'plus'" />
               <div class="ant-upload-text">
@@ -59,7 +67,11 @@
         <a-form-item :colon="false">
           <span slot="label">
             备案信息
-            <a-tooltip title="根据最新规定，网站下方必须设置备案编号和查询链接" placement="topLeft" arrow-point-at-center>
+            <a-tooltip
+              title="根据最新规定，网站下方必须设置备案编号和查询链接"
+              placement="topLeft"
+              arrow-point-at-center
+            >
               <a-icon type="question-circle-o" />
             </a-tooltip>
           </span>
@@ -89,7 +101,11 @@
         <a-form-item :colon="false">
           <span slot="label">
             开启预览功能
-            <a-tooltip title="点击文章除标题外的其它部分，会弹出预览抽屉" placement="topLeft" arrow-point-at-center>
+            <a-tooltip
+              title="点击文章除标题外的其它部分，会弹出预览抽屉"
+              placement="topLeft"
+              arrow-point-at-center
+            >
               <a-icon type="question-circle-o" />
             </a-tooltip>
           </span>
@@ -107,19 +123,31 @@
         <a-form-item :colon="false">
           <span slot="label">
             开启文章评论
-            <a-tooltip title="是否允许对文章评论，文章编辑页面可覆盖该设置" placement="topLeft" arrow-point-at-center>
+            <a-tooltip
+              title="是否允许对文章评论，文章编辑页面可覆盖该设置"
+              placement="topLeft"
+              arrow-point-at-center
+            >
               <a-icon type="question-circle-o" />
             </a-tooltip>
           </span>
           <a-switch v-decorator="['enableComments', { valuePropName: 'checked' }]" />
         </a-form-item>
         <a-form-item label="文章评论及留言的每页条数" :colon="false">
-          <a-input-number v-decorator="['commentPageSize', commentPageSizeOpts]" :min="1" :max="999" />
+          <a-input-number
+            v-decorator="['commentPageSize', commentPageSizeOpts]"
+            :min="1"
+            :max="999"
+          />
         </a-form-item>
         <a-form-item :colon="false">
           <span slot="label">
             开启百度统计
-            <a-tooltip title="启用后将在除后台管理外的其它页面注入百度统计代码" placement="topLeft" arrow-point-at-center>
+            <a-tooltip
+              title="启用后将在除后台管理外的其它页面注入百度统计代码"
+              placement="topLeft"
+              arrow-point-at-center
+            >
               <a-icon type="question-circle-o" />
             </a-tooltip>
           </span>
@@ -128,7 +156,11 @@
         <a-form-item :colon="false">
           <span slot="label">
             百度统计Key
-            <a-tooltip title="请在百度统计官网 - 管理 - 代码获取页面查看所属站点的key" placement="topLeft" arrow-point-at-center>
+            <a-tooltip
+              title="请在百度统计官网 - 管理 - 代码获取页面查看所属站点的key"
+              placement="topLeft"
+              arrow-point-at-center
+            >
               <a-icon type="question-circle-o" />
             </a-tooltip>
           </span>
@@ -148,13 +180,13 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { IResp } from '@/types';
-import { defaultSetting } from '@/server/models/setting';
+import Vue from 'vue'
+import { IResp } from '@/types'
+import { defaultSetting } from '@/server/models/setting'
 export default Vue.extend({
   name: 'PageSystemSettings',
   layout: 'admin',
-  data () {
+  data() {
     return {
       form: this.$form.createForm(this),
       defaultSetting,
@@ -164,38 +196,38 @@ export default Vue.extend({
         rules: [
           {
             required: true,
-            message: '博客名称不能为空！'
-          }
-        ]
+            message: '博客名称不能为空！',
+          },
+        ],
       },
       postPageSizeOpts: {
         rules: [
           {
             required: true,
-            message: '每页条数不能为空！'
-          }
-        ]
+            message: '每页条数不能为空！',
+          },
+        ],
       },
       commentPageSizeOpts: {
         rules: [
           {
             required: true,
-            message: '每页条数不能为空！'
-          }
-        ]
-      }
-    };
+            message: '每页条数不能为空！',
+          },
+        ],
+      },
+    }
   },
-  async mounted () {
-    const { code, data }: IResp = await this.$axios.$get('/api/settings');
+  async mounted() {
+    const { code, data }: IResp = await this.$axios.$get('/api/settings')
     if (code === 1) {
-      const settings = data.settings;
-      this.blogLogo = settings.blogLogo;
-      this.setForm(settings);
+      const settings = data.settings
+      this.blogLogo = settings.blogLogo
+      this.setForm(settings)
     }
   },
   methods: {
-    setForm (settings) {
+    setForm(settings) {
       this.form.setFieldsValue({
         blogName: settings.blogName,
         blogSlogan: settings.blogSlogan,
@@ -208,61 +240,61 @@ export default Vue.extend({
         enableComments: settings.enableComments,
         commentPageSize: settings.commentPageSize,
         enableStatistics: settings.enableStatistics,
-        statisticsKey: settings.statisticsKey
-      });
+        statisticsKey: settings.statisticsKey,
+      })
     },
-    beforeUpload (file) {
-      const isImg = file.type.indexOf('image/') === 0;
-      const isLt2M = file.size / 1024 / 1024 < 2;
+    beforeUpload(file) {
+      const isImg = file.type.indexOf('image/') === 0
+      const isLt2M = file.size / 1024 / 1024 < 2
       if (!isImg) {
-        this.$message.error('只允许上传图片！');
+        this.$message.error('只允许上传图片！')
       } else if (!isLt2M) {
-        this.$message.error('图片体积不能大于2M！');
+        this.$message.error('图片体积不能大于2M！')
       }
-      return isImg && isLt2M;
+      return isImg && isLt2M
     },
 
-    getBase64 (img, callback) {
-      const reader = new FileReader();
-      reader.addEventListener('load', () => callback(reader.result));
-      reader.readAsDataURL(img);
+    getBase64(img, callback) {
+      const reader = new FileReader()
+      reader.addEventListener('load', () => callback(reader.result))
+      reader.readAsDataURL(img)
     },
 
-    uploadChange (info) {
+    uploadChange(info) {
       if (info.file.status === 'uploading') {
-        this.imgLoading = true;
-        return;
+        this.imgLoading = true
+        return
       }
       if (info.file.status === 'done') {
-        this.getBase64(info.file.originFileObj, imageUrl => {
-          this.blogLogo = imageUrl;
-          this.imgLoading = false;
-        });
+        this.getBase64(info.file.originFileObj, (imageUrl) => {
+          this.blogLogo = imageUrl
+          this.imgLoading = false
+        })
       }
     },
-    save () {
+    save() {
       this.form.validateFieldsAndScroll((error, values) => {
         if (!error) {
-          const data = values;
-          data.blogLogo = this.blogLogo;
-          this.$axios.$put('/api/admin/settings', data).then(resp => {
+          const data = values
+          data.blogLogo = this.blogLogo
+          this.$axios.$put('/api/admin/settings', data).then((resp) => {
             if (resp.code === 1) {
-              this.$message.success('保存成功！');
+              this.$message.success('保存成功！')
             } else {
-              console.error(resp.message);
-              this.$message.error('操作失败！');
+              console.error(resp.message)
+              this.$message.error('操作失败！')
             }
-          });
+          })
         }
-      });
+      })
     },
-    reset () {
-      this.blogLogo = defaultSetting.blogLogo;
-      this.setForm(defaultSetting);
-      (document.scrollingElement as HTMLElement).scrollTop = 0;
-    }
-  }
-});
+    reset() {
+      this.blogLogo = defaultSetting.blogLogo
+      this.setForm(defaultSetting)
+      ;(document.scrollingElement as HTMLElement).scrollTop = 0
+    },
+  },
+})
 </script>
 
 <style scoped>

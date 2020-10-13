@@ -3,7 +3,7 @@
     <div class="container">
       <div class="left-top-header">
         <nuxt-link to="/">
-          <img :src="settings.blogLogo">
+          <img :src="settings.blogLogo" />
           <h4>
             {{ settings.blogName }}
             <p v-if="settings.blogSlogan">
@@ -20,20 +20,20 @@
   </a-locale-provider>
 </template>
 <script lang="ts">
-import Vue from 'vue';
-import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN';
-import LayoutFooter from '@/components/LayoutFooter.vue';
+import Vue from 'vue'
+import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
+import LayoutFooter from '@/components/LayoutFooter.vue'
 export default Vue.extend({
   components: {
-    LayoutFooter
+    LayoutFooter,
   },
-  data () {
+  data() {
     return {
       settings: this.$store.state.settings,
-      zhCN
-    };
-  }
-});
+      zhCN,
+    }
+  },
+})
 </script>
 <style scoped>
 .auth-wrap {
@@ -57,10 +57,9 @@ export default Vue.extend({
   height: 100%;
   color: #2b2b2b;
   font-size: 18px;
-  font-family: -apple-system, BlinkMacSystemFont, "Arial", "Segoe UI",
-    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue",
-    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-    "Segoe UI Symbol";
+  font-family: -apple-system, BlinkMacSystemFont, 'Arial', 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 }
 
 .left-top-header a img {
@@ -69,6 +68,6 @@ export default Vue.extend({
 }
 
 .left-top-header a h4 {
-    margin: 0;
+  margin: 0;
 }
 </style>

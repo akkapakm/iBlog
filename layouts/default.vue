@@ -5,50 +5,65 @@
       <div class="darkmode-layer" />
       <div class="navbar">
         <div class="navbar-header">
-          <a class="navbar-brand" href="/">
+          <a class="navbar-brand"
+             href="/">
             <img :src="settings.blogLogo">
             <h4>
-              {{ settings.blogName }}
+              {{settings.blogName}}
               <p v-if="settings.blogSlogan">
-                {{ settings.blogSlogan }}
+                {{settings.blogSlogan}}
               </p>
             </h4>
           </a>
         </div>
-        <button class="navbar-toggler" type="button" @click="toggleMenu">
+        <button class="navbar-toggler"
+                type="button"
+                @click="toggleMenu">
           <web-font icon="bars" />
         </button>
-        <div class="navbar-collapse" :class="{ showMenu }">
+        <div class="navbar-collapse"
+             :class="{showMenu}">
           <ul>
-            <li
-              :class="{
+            <li :class="{
                 'blog-active':
                   $route.path === '/' || $route.path.startsWith('/blog')
               }"
-              @click="hideMenu"
-            >
+                @click="hideMenu">
               <nuxt-link to="/">
-                <font-awesome-icon :icon="['fas', 'pen-nib']" />博客
+                <font-awesome-icon :icon="['fas','pen-nib']" /> 博客
               </nuxt-link>
               <div class="nav-line" />
             </li>
-            <li :class="{ 'guestbook-active': $route.path === '/guestbook' }" @click="hideMenu">
+            <li :class="{'guestbook-active': $route.path ==='/guestbook'}"
+                @click="hideMenu">
               <nuxt-link to="/guestbook">
-                <font-awesome-icon :icon="['fas', 'comment-dots']" />留言
+                <font-awesome-icon :icon="['fas','comment-dots']" /> 留言
               </nuxt-link>
               <div class="nav-line" />
             </li>
-            <li :class="{ 'profile-active': $route.path === '/profile' }" @click="hideMenu">
+            <li :class="{'profile-active': $route.path ==='/profile'}"
+                @click="hideMenu">
               <nuxt-link to="/profile">
-                <font-awesome-icon :icon="['fas', 'user']" />关于
+                <font-awesome-icon :icon="['fas','user']" /> 关于
+              </nuxt-link>
+              <div class="nav-line" />
+            </li>
+            <li :class="{'profile-active': $route.path ==='/admin'}"
+                @click="hideMenu">
+              <nuxt-link to="/admin">
+                <font-awesome-icon :icon="['fas','user']" /> 管理
               </nuxt-link>
               <div class="nav-line" />
             </li>
             <li class="dark-tools">
-              <a class="dark-mode-btn" title="深色模式" @click="toggleMode">
+              <a class="dark-mode-btn"
+                 title="深色模式"
+                 @click="toggleMode">
                 <web-font icon="moon" />
               </a>
-              <a class="light-mode-btn" title="浅色模式" @click="toggleMode">
+              <a class="light-mode-btn"
+                 title="浅色模式"
+                 @click="toggleMode">
                 <web-font icon="sun" />
               </a>
             </li>
@@ -58,7 +73,9 @@
       <nuxt />
       <layout-footer :show-login="true" />
       <div class="fixed-tools">
-        <div :class="{ 'show-to-top': showToTop }" class="to-top" @click="toTop">
+        <div :class="{'show-to-top': showToTop}"
+             class="to-top"
+             @click="toTop">
           <web-font icon="arrow-to-top" />
         </div>
       </div>
@@ -66,80 +83,87 @@
   </a-locale-provider>
 </template>
 <script lang="ts">
-import Vue from 'vue';
-import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN';
-import LayoutFooter from '@/components/LayoutFooter.vue';
-import { ISetting } from '@/types/schema';
+import Vue from 'vue'
+import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
+import LayoutFooter from '@/components/LayoutFooter.vue'
+import { ISetting } from '@/types/schema'
 export default Vue.extend({
   components: {
-    LayoutFooter
+    LayoutFooter,
   },
-  data () {
+  data() {
     return {
       year: new Date().getFullYear(),
       settings: this.$store.state.settings as ISetting,
       zhCN,
       showToTop: false,
-      showMenu: false
-    };
+      showMenu: false,
+    }
   },
-  mounted () {
+  mounted() {
     if (this.settings.enableStatistics && this.settings.statisticsKey) {
-      const hm = document.createElement('script');
-      hm.src = `https://hm.baidu.com/hm.js?${this.settings.statisticsKey}`;
-      const script = document.getElementsByTagName('script')[0];
+      const hm = document.createElement('script')
+      hm.src = `https://hm.baidu.com/hm.js?${this.settings.statisticsKey}`
+      const script = document.getElementsByTagName('script')[0]
       if (script && script.parentNode) {
-        script.parentNode.insertBefore(hm, script);
+        script.parentNode.insertBefore(hm, script)
       }
     }
 
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        this.showToTop = true;
-      } else {
-        this.showToTop = false;
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (window.scrollY > 300) {
+          this.showToTop = true
+        } else {
+          this.showToTop = false
+        }
+      },
+      {
+        passive: true,
       }
-    }, {
-      passive: true
-    });
+    )
   },
   methods: {
-    toggleMenu () {
-      this.showMenu = !this.showMenu;
+    toggleMenu() {
+      this.showMenu = !this.showMenu
     },
-    hideMenu () {
-      this.showMenu = false;
+    hideMenu() {
+      this.showMenu = false
     },
-    toTop () {
-      window.scrollTo(0, 0);
+    toTop() {
+      window.scrollTo(0, 0)
     },
-    toggleMode () {
-      const container = document.body;
+    // 切换 light / dark mode
+    toggleMode() {
+      const container = document.body
       if (container.classList.contains('dark-mode')) {
-        container.classList.remove('dark-expaned');
+        container.classList.remove('dark-expaned')
         setTimeout(() => {
-          container.classList.remove('dark-notransition');
-          container.classList.remove('dark-mode');
-          container.classList.add('light-mode');
-        }, 10);
-        localStorage.removeItem('dark-mode');
+          container.classList.remove('dark-notransition')
+          container.classList.remove('dark-mode')
+          container.classList.add('light-mode')
+        }, 10)
+        localStorage.removeItem('dark-mode')
       } else {
-        container.classList.remove('light-mode');
-        container.classList.add('dark-mode');
+        container.classList.remove('light-mode')
+        container.classList.add('dark-mode')
         setTimeout(() => {
-          container.classList.add('dark-notransition');
-          container.classList.add('dark-expaned');
-        }, 300);
-        localStorage.setItem('dark-mode', '1');
+          container.classList.add('dark-notransition')
+          container.classList.add('dark-expaned')
+        }, 300)
+        localStorage.setItem('dark-mode', '1')
       }
-    }
+    },
   },
   head: {
-    script: [{
-      src: '/darkmode.js'
-    }]
-  }
-});
+    script: [
+      {
+        src: '/darkmode.js',
+      },
+    ],
+  },
+})
 </script>
 <style scoped>
 .navbar {
@@ -168,10 +192,8 @@ export default Vue.extend({
   height: 100%;
   color: #2b2b2b;
   font-size: 18px;
-  font-family: -apple-system, BlinkMacSystemFont, "Arial", "Segoe UI",
-    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue",
-    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-    "Segoe UI Symbol";
+  font-family: -apple-system, BlinkMacSystemFont, 'Arial', 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 }
 
 .navbar .navbar-brand img {
@@ -194,7 +216,7 @@ export default Vue.extend({
   display: none;
   padding: 4px 12px;
   color: rgba(0, 0, 0, 0.5);
-  border: 1px solid #ccc;;
+  border: 1px solid #ccc;
   cursor: pointer;
   width: 56px;
   height: 40px;
@@ -309,11 +331,11 @@ export default Vue.extend({
   font-size: 22px;
   border-radius: 50%;
   color: #555;
-  opacity: .7;
+  opacity: 0.7;
   background: #fff;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15);
   cursor: pointer;
-  transition: all .4s;
+  transition: all 0.4s;
 }
 
 .to-top.show-to-top {
@@ -381,7 +403,7 @@ export default Vue.extend({
   right: 17px;
   border-radius: 50%;
   transform: scale(0);
-  transition: all .3s ease;
+  transition: all 0.3s ease;
   z-index: 99999;
 }
 
@@ -486,8 +508,7 @@ export default Vue.extend({
 .dark-mode .ant-drawer img,
 .dark-mode .ant-drawer .pre-header-left div,
 .dark-mode .ant-drawer pre.info,
-.dark-mode .ant-drawer pre.alert
-{
+.dark-mode .ant-drawer pre.alert {
   mix-blend-mode: difference;
 }
 </style>
